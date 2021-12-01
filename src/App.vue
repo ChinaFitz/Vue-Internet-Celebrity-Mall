@@ -1,8 +1,10 @@
 <template>
     <div id="app">
         <Header/>
-        中间的路由部分
-        <Footer/>
+        <router-view></router-view>
+        <Footer
+            v-if="$route.meta.not_login_or_register"
+        />
     </div>
 </template>
 
