@@ -10,7 +10,7 @@
                         <p>
                             <span>请</span>
                             <router-link to="/login" href="###">登录</router-link>
-                            <router-link to="/login" href="###" class="register">免费注册</router-link>
+                            <router-link to="/register" href="###" class="register">免费注册</router-link>
                         </p>
                     </div>
                     <div class="typeList">
@@ -28,7 +28,7 @@
             <!--头部第二行 搜索区域-->
             <div class="bottom">
                 <h1 class="logoArea">
-                    <router-link to="/login" class="logo" title="网红好物" href="###" target="_self">
+                    <router-link to="/home" class="logo" title="网红好物" href="###" target="_self">
                         <img src="./images/logo.png" alt="" />
                     </router-link>
                 </h1>
