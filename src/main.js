@@ -25,6 +25,11 @@ Vue.prototype.replace = function(route, onFulfilled, onRejected) {
 }
 // ================================ 修复 Avoided redundant navigation... 报错 ==================================
 
+
+// 注册全局组件 -> 三级商品菜单
+import TripleNav from "@/views/Home/TripleNav"
+Vue.component(TripleNav.name, TripleNav)
+
 new Vue({
   router,
   store,

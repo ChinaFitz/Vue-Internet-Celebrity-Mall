@@ -1,6 +1,6 @@
 <template>
     <div>
-        登录路由
+        
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 <script>
 
     export default {
-        name: "Login", // 指定组件名
+        name: "Search", // 指定组件名
         data: function () {
             return {
                 

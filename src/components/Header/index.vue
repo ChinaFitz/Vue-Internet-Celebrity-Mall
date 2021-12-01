@@ -54,7 +54,9 @@
         },
         methods: {
             searchGoods() {
-                
+                this.$router.push({
+                    name: "Register",
+                })
             }
         }
     }
