@@ -6,5 +6,11 @@ module.exports = {
     devServer: {
         // 自动打开浏览器
         open: true,
+        //配置代理进行跨域
+        proxy: {
+            '/api': {
+                target: 'http://39.98.123.211',
+            },
+        },
     },
 };

@@ -1,15 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+// Vuex模块
+import home from './home';
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    // 由于该项目所涉及到的模块较多, 为了避免糅合, 所有使用Vuex模块形式
+    modules: {
+        home,
+    },
+});
