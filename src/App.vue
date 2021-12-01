@@ -1,5 +1,25 @@
 <template>
-    <div id="app"></div>
+    <div id="app">
+        <Header/>
+        中间的路由部分
+        <Footer/>
+    </div>
 </template>
 
-<style lang="less"></style>
+
+<script>
+    import Header from "@/components/Header"
+    import Footer from "@/components/Footer"
+
+    export default {
+        name: "App",
+        components: {
+            Header,
+            Footer,
+        },
+    }
+</script>
+
+<style lang="less">
+
+</style>
