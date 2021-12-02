@@ -44,6 +44,7 @@
 </template>
 
 <script>
+    import lodash from "lodash"
 
     export default {
         name: "Header", // 指定组件名
@@ -61,11 +62,14 @@
                 let params = {}
                 // 与Header组件的search功能的查询参数进行合并
                 if (Object.keys(this.$route.query).length) {
-                    query = Object.assign(query, this.$route.query)
+                    let query_clone = lodash.cloneDeep(this.$route.query)
+                    query = Object.assign(query_clone, query)
                 }
                 if (Object.keys(this.$route.params).length) {
-                    params = Object.assign(params, this.$route.params)
+                    let params_clone = lodash.cloneDeep(this.$route.params)
+                    params = Object.assign(params_clone, params)
                 }
+
                 this.$router.push({
                     name: "Search",
                     query,

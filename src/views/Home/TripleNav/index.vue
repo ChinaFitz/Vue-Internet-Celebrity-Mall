@@ -77,13 +77,13 @@
 
 <script>
     import { mapState } from "vuex"
+    import lodash from "lodash"
     
     export default {
         name: "TripleNav", // 指定组件名
         data: function () {
             return {
                 sort_list_show: false,
-                dd: null,
             }
         },
         computed: {
@@ -116,10 +116,12 @@
                     let params = {}
                     // 与Header组件的search功能的查询参数进行合并
                     if (Object.keys(this.$route.query).length) {
-                        query = Object.assign(query, this.$route.query)
+                        let query_clone = lodash.cloneDeep(this.$route.query)
+                        query = Object.assign(query_clone, query)
                     }
                     if (Object.keys(this.$route.params).length) {
-                        params = Object.assign(params, this.$route.params)
+                        let params_clone = lodash.cloneDeep(this.$route.params)
+                        params = Object.assign(params_clone, params)
                     }
 
                     // 组合出需要跳转的target
@@ -143,9 +145,12 @@
             },
             // transition钩子, 用于解决home组件不需要过渡,但是在切换时仍然生效的问题
             enter(el, done) {
-                if (this.$route.path === "/home"){
-                    done()
-                }
+                // if (this.$route.path === "/home"){
+                    
+                // }else {
+                //     done()
+                // }
+                done()
             },
             
         }
