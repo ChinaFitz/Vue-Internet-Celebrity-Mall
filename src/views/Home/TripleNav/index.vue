@@ -3,11 +3,11 @@
     <div class="type-nav">
         <div
             class="container"
-            @mouseenter="showSortList"
-            @mouseleave="hideSortList"
         >
             <h2 
                 class="all"
+                @mouseenter="showSortList"
+                @mouseleave="hideSortList"
             >
             全部商品分类
             </h2>
@@ -25,7 +25,12 @@
                 name="sort-list"
                 @enter="enter"
             >
-                <div class="sort" v-show="sort_list_show">
+                <div 
+                    class="sort"
+                    v-show="sort_list_show"
+                    @mouseenter="showSortList"
+                    @mouseleave="hideSortList"
+                >
                     <div class="all-sort-list2">
                         <!-- 事件委派给所有商品查询用 -->
                         <div class="item" v-for="c in categoryList" :key="c.categoryId" @click.prevent="visitCategory">
@@ -145,20 +150,19 @@
             },
             // transition钩子, 用于解决home组件不需要过渡,但是在切换时仍然生效的问题
             enter(el, done) {
-                // if (this.$route.path === "/home"){
-                    
-                // }else {
-                //     done()
-                // }
+                if (this.$route.path === "/home") {
+                    el.style.transitionDuration = "1ms"
+                }else {
+                    el.style.transitionDuration = "400ms"
+                }
                 done()
             },
-            
         }
     }
 </script>
 
 <style lang="less" scoped>
-        .type-nav {
+    .type-nav {
         border-bottom: 2px solid #e1251b;
 
         .container {
@@ -291,7 +295,6 @@
     }
     .sort-list-enter-active,
     .sort-list-leave-active {
-        transition-duration: 400ms!important;
         transition-property: all!important;
         transition-timing-function: ease-in!important;
         overflow: hidden!important;
