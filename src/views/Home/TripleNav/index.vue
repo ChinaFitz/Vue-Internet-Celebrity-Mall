@@ -153,7 +153,7 @@
                 if (this.$route.path === "/home") {
                     el.style.transitionDuration = "1ms"
                 }else {
-                    el.style.transitionDuration = "400ms"
+                    el.style.transitionDuration = "350ms"
                 }
                 done()
             },
@@ -298,6 +298,7 @@
         transition-property: all!important;
         transition-timing-function: ease-in!important;
         overflow: hidden!important;
+        transition-duration: 350ms!important;
     }
     .sort-list-enter-to,
     .sort-list-leave {
