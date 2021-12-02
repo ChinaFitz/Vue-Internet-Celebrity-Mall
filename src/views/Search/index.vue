@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+        <TripleNav/>
     </div>
 </template>
 

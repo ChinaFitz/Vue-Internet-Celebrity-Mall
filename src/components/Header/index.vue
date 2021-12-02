@@ -54,8 +54,22 @@
         },
         methods: {
             searchGoods() {
+
+                let query = {
+                    goods_name: this.goods_name,
+                }
+                let params = {}
+                // 与Header组件的search功能的查询参数进行合并
+                if (Object.keys(this.$route.query).length) {
+                    query = Object.assign(query, this.$route.query)
+                }
+                if (Object.keys(this.$route.params).length) {
+                    params = Object.assign(params, this.$route.params)
+                }
                 this.$router.push({
-                    name: "Register",
+                    name: "Search",
+                    query,
+                    params,
                 })
             }
         }

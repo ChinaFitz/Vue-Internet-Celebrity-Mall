@@ -1,8 +1,16 @@
 <template>
     <!-- 商品分类导航 -->
     <div class="type-nav">
-        <div class="container">
-            <h2 class="all">全部商品分类</h2>
+        <div
+            class="container"
+            @mouseenter="showSortList"
+            @mouseleave="hideSortList"
+        >
+            <h2 
+                class="all"
+            >
+            全部商品分类
+            </h2>
             <nav class="nav">
                 <a href="###">服装城</a>
                 <a href="###">美妆馆</a>
@@ -13,29 +21,56 @@
                 <a href="###">有趣</a>
                 <a href="###">秒杀</a>
             </nav>
-            <div class="sort">
-                <div class="all-sort-list2">
-                    <div class="item" v-for="c in categoryList" :key="c.categoryId">
-                        <h3>
-                            <a href="">{{ c.categoryName }}</a>
-                        </h3>
-                        <div class="item-list clearfix">
-                            <div class="subitem">
-                                <dl class="fore" v-for="child in c.categoryChild" :key="child.categoryId">
-                                    <dt>
-                                        <a href="">{{ child.categoryName }}</a>
-                                    </dt>
-                                    <dd>
-                                        <em v-for="grandChild in child.categoryChild" :key="grandChild.categoryId">
-                                            <a href="">{{ grandChild.categoryName }}</a>
-                                        </em>
-                                    </dd>
-                                </dl>
+            <transition
+                name="sort-list"
+                @enter="enter"
+            >
+                <div class="sort" v-show="sort_list_show">
+                    <div class="all-sort-list2">
+                        <!-- 事件委派给所有商品查询用 -->
+                        <div class="item" v-for="c in categoryList" :key="c.categoryId" @click.prevent="visitCategory">
+                            <h3>
+                                <!-- 表示所有商品分类, 并且能够进行商品查询后路由跳转 -->
+                                <a
+                                    href=""
+                                    :data-category-name="c.categoryName"
+                                    :data-category-id="c.categoryId"
+                                >
+                                {{ c.categoryName }}
+                                </a>
+                            </h3>
+                            <div class="item-list clearfix">
+                                <div class="subitem">
+                                    <dl class="fore" v-for="child in c.categoryChild" :key="child.categoryId">
+                                        <dt>
+                                            <!-- 表示所有商品分类, 并且能够进行商品查询后路由跳转 -->
+                                            <a
+                                                href=""
+                                                :data-category-name="child.categoryName"
+                                                :data-category-id="child.categoryId"
+                                            >
+                                            {{ child.categoryName }}
+                                            </a>
+                                        </dt>
+                                        <dd>
+                                            <em v-for="grandChild in child.categoryChild" :key="grandChild.categoryId">
+                                                <!-- 表示所有商品分类, 并且能够进行商品查询后路由跳转 -->
+                                                <a
+                                                    href=""
+                                                    :data-category-name="grandChild.categoryName"
+                                                    :data-category-id="grandChild.categoryId"
+                                                >
+                                                {{ grandChild.categoryName }}
+                                                </a>
+                                            </em>
+                                        </dd>
+                                    </dl>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -47,7 +82,8 @@
         name: "TripleNav", // 指定组件名
         data: function () {
             return {
-
+                sort_list_show: false,
+                dd: null,
             }
         },
         computed: {
@@ -60,8 +96,59 @@
             
         },
         mounted() {
-            this.$store.dispatch("getCategoryList")
+            if (!(this.$route.path === "/search")){
+                this.sort_list_show = true
+            }
         },
+        methods: {
+            visitCategory($e) {
+                // 获取到当前点击的商品分类
+                const currentEle = $e.target
+                let { categoryName, categoryId } = currentEle.dataset
+
+                // 当点击的是商品分类本身时
+                if (categoryId) {
+                    
+                    let query = {
+                        categoryId,
+                        categoryName,
+                    }
+                    let params = {}
+                    // 与Header组件的search功能的查询参数进行合并
+                    if (Object.keys(this.$route.query).length) {
+                        query = Object.assign(query, this.$route.query)
+                    }
+                    if (Object.keys(this.$route.params).length) {
+                        params = Object.assign(params, this.$route.params)
+                    }
+
+                    // 组合出需要跳转的target
+                    const targetRoute = {
+                        name: "Search",
+                        query,
+                        params,
+                    }
+                    this.$router.push(targetRoute)
+                }
+            },
+            showSortList() {
+                if (this.$route.path === "/search"){
+                    this.sort_list_show = true
+                }
+            },
+            hideSortList() {
+                if (this.$route.path === "/search"){
+                    this.sort_list_show = false
+                }
+            },
+            // transition钩子, 用于解决home组件不需要过渡,但是在切换时仍然生效的问题
+            enter(el, done) {
+                if (this.$route.path === "/home"){
+                    done()
+                }
+            },
+            
+        }
     }
 </script>
 
@@ -101,13 +188,16 @@
                 left: 0;
                 top: 45px;
                 width: 210px;
-                height: 461px;
+                height: 476px;
                 position: absolute;
                 background: #fafafa;
                 z-index: 999;
 
                 .all-sort-list2 {
+                    // overflow: hidden;
                     .item {
+                        cursor: pointer;
+                        
                         h3 {
                             line-height: 30px;
                             font-size: 14px;
@@ -118,6 +208,7 @@
 
                             a {
                                 color: #333;
+                                text-decoration: none;
                             }
                         }
 
@@ -176,6 +267,7 @@
                         }
 
                         &:hover {
+                            background-color: rgba(224, 224, 224, .6);
                             .item-list {
                                 display: block;
                             }
@@ -185,4 +277,23 @@
             }
         }
     }
+
+
+    // 三级商品菜单(sort-list)的transition
+    .sort-list-enter,
+    .sort-list-leave-to {
+        height: 0!important;
+    }
+    .sort-list-enter-active,
+    .sort-list-leave-active {
+        transition-duration: 400ms!important;
+        transition-property: all!important;
+        transition-timing-function: ease-in!important;
+        overflow: hidden!important;
+    }
+    .sort-list-enter-to,
+    .sort-list-leave {
+        height: 476px!important;
+    }
+    
 </style>
