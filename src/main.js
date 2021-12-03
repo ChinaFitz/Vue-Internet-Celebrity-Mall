@@ -10,6 +10,10 @@ Vue.config.productionTip = false
 import TripleNav from "@/views/Home/TripleNav"
 Vue.component(TripleNav.name, TripleNav)
 
+// 注册全局组件 -> 轮播图(banner和floor)
+import Carousel from "@/components/Carousel"
+Vue.component(Carousel.name, Carousel)
+
 // 引入Mock让其自动执行一次, 模拟后台返回数据
 import "@/mock/mockServe"
 

@@ -24,20 +24,7 @@
                             <img :src="floor.imgUrl" />
                         </div>
                         <div class="floorBanner">
-                            <div class="swiper-container" id="floor1Swiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide" v-for="carousel in floor.carouselList" :key="carousel.id">
-                                        <img :src="carousel.imgUrl" />
-                                    </div>
-                                </div>
-
-                                <!-- 如果需要分页器 -->
-                                <div class="swiper-pagination"></div>
-
-                                <!-- 如果需要导航按钮 -->
-                                <div class="swiper-button-prev"></div>
-                                <div class="swiper-button-next"></div>
-                            </div>
+                            <Carousel :carouselList="floor.carouselList"/>
                         </div>
 
                         <div class="split">
