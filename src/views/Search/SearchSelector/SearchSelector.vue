@@ -4,7 +4,7 @@
             <div class="fl key brand">品牌</div>
             <div class="value logos">
                 <ul class="logo-list">
-                    <li v-for="tm in trademarkList" :key="tm.tmId">
+                    <li v-for="tm in trademarkList" :key="tm.tmId" @click="select_trademark_add_to_bread(tm.tmName)">
                         {{ tm.tmName }}
                     </li>
                 </ul>
@@ -18,7 +18,9 @@
             <div class="fl key"> {{ attr.attrName }}</div>
             <div class="fl value">
                 <ul class="type-list">
-                    <li v-for="(attrVal, index) in attr.attrValueList" :key="index">
+                    <li v-for="(attrVal, index) in attr.attrValueList" :key="index"
+                        @click="select_attrs_add_to_bread({id: attr.attrId, value: attrVal, key: attr.attrName})"
+                    >
                         <a> {{ attrVal }}</a>
                     </li>
                 </ul>
@@ -32,13 +34,21 @@
     import { mapGetters, } from "vuex"
 
     export default {
-      name: 'SearchSelector',
-      computed: {
-          ...mapGetters([
-            "attrsList",
-            "trademarkList",
-        ])
-      }
+        name: 'SearchSelector',
+        computed: {
+            ...mapGetters([
+                "attrsList",
+                "trademarkList",
+            ])
+        },
+        methods: {
+            select_trademark_add_to_bread(tmName) {
+                this.$emit("select_trademark_add_to_bread", tmName)
+            },
+            select_attrs_add_to_bread(goodAttrs_obj) {
+                this.$emit("select_attrs_add_to_bread", goodAttrs_obj)
+            },
+        }
     }
 </script>
 

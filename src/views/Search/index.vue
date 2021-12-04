@@ -19,11 +19,18 @@
                             {{ $route.query.goods_name }}
                             <i @click="removeBread('goods_name')">×</i>
                         </li>
+                        <li class="with-x" v-for="attr in $route.query.attrs_list" :key="attr.split(':')[0]">
+                            {{ attr.split(':')[1] }}
+                            <i @click="removeBread('attr', attr)">×</i>
+                        </li>
                     </ul>
                 </div>
 
                 <!--selector-->
-                <SearchSelector />
+                <SearchSelector
+                    @select_trademark_add_to_bread="select_trademark_add_to_bread"
+                    @select_attrs_add_to_bread="select_attrs_add_to_bread"
+                />
 
                 <!--details-->
                 <div class="details clearfix">
@@ -127,6 +134,7 @@
 <script>
     import { mapGetters, } from "vuex"
     import SearchSelector from './SearchSelector/SearchSelector'
+    import Lodash from "lodash"
 
     export default {
         name: 'Search',
@@ -134,8 +142,14 @@
         components: {
             SearchSelector
         },
+        data() {
+            return {
+
+            }
+        },
         mounted() {
             this.getGoodsInfo()
+            this.$route.query.attrs_list = []
         },
         computed: {
             ...mapGetters([
@@ -150,6 +164,7 @@
                     categoryId3,
                     categoryName,
                     goods_name,
+                    attrs_list,
                 } = this.$route.query
 
                 let require_field = {
@@ -161,19 +176,39 @@
                     order: "",
                     pageNo: 1,
                     pageSize: 10,
-                    props: [],
-                    trademark: ""
+                    props: attrs_list,
+                    trademark: "",
                 }
                 this.$store.dispatch("getGoodsInfo", require_field)
             },
             // 移除面包屑
-            removeBread(type) {
+            removeBread(type, attr) {
                 if (type === 'categoryName') {
                     this.$route.query.categoryName = undefined
                 }else if (type === 'goods_name') {
                     this.$route.query.goods_name = undefined
+                }else if (type === 'trademark') {
+                    this.trademark = undefined
+                }else if (type === 'attr') {
+                    let index = this.$route.query.attrs_list.indexOf(attr)
+                    if (index !== -1) {
+                        this.$route.query.attrs_list.splice(index, 1)
+                    }
                 }
                 this.getGoodsInfo()
+            },
+            select_trademark_add_to_bread(tmName) {
+                this.$route.query.goods_name = tmName
+                this.$nextTick(this.getGoodsInfo)
+            },
+            select_attrs_add_to_bread(goodAttrs_obj) {
+                let goodAttrs = Object.values(goodAttrs_obj).join(":")
+
+                // 保持商品属性的唯一性
+                if (this.$route.query.attrs_list.indexOf(goodAttrs) === -1) {
+                    this.$route.query.attrs_list.push(goodAttrs)
+                }
+                this.$nextTick(this.getGoodsInfo)
             },
         },
         watch: {
