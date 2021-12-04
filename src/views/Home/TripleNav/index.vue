@@ -39,7 +39,7 @@
                                 <a
                                     href=""
                                     :data-category-name="c.categoryName"
-                                    :data-category-id="c.categoryId"
+                                    :data-category-id3="c.categoryId"
                                 >
                                 {{ c.categoryName }}
                                 </a>
@@ -52,7 +52,7 @@
                                             <a
                                                 href=""
                                                 :data-category-name="child.categoryName"
-                                                :data-category-id="child.categoryId"
+                                                :data-category-id2="child.categoryId"
                                             >
                                             {{ child.categoryName }}
                                             </a>
@@ -63,7 +63,7 @@
                                                 <a
                                                     href=""
                                                     :data-category-name="grandChild.categoryName"
-                                                    :data-category-id="grandChild.categoryId"
+                                                    :data-category-id1="grandChild.categoryId"
                                                 >
                                                 {{ grandChild.categoryName }}
                                                 </a>
@@ -109,13 +109,15 @@
             visitCategory($e) {
                 // 获取到当前点击的商品分类
                 const currentEle = $e.target
-                let { categoryName, categoryId } = currentEle.dataset
+                let { categoryName, categoryId3, categoryId2, categoryId1 } = currentEle.dataset
 
                 // 当点击的是商品分类本身时
-                if (categoryId) {
+                if (categoryId3 || categoryId2 || categoryId1) {
                     
                     let query = {
-                        categoryId,
+                        categoryId3,
+                        categoryId2,
+                        categoryId1,
                         categoryName,
                     }
                     let params = {}
