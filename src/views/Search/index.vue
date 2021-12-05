@@ -37,23 +37,37 @@
                     <div class="sui-navbar">
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
-                                <li class="active">
-                                    <a href="#">综合</a>
+                                <li
+                                    :class="{active: goods_sort[1]}"
+                                    @click="change_sorting_basis('complex')"
+                                >
+                                    <a href="#">
+                                        综合
+                                        <i class="goods-sort sort-arrow" v-if="goods_sort[1] === 'asc'">&#xe840;</i>
+                                        <i class="goods-sort sort-arrow" v-if="goods_sort[1] === 'desc'">&#xe83e;</i>
+                                    </a>
+                                </li>
+                                <li
+                                    :class="{active: goods_sort[2]}"
+                                    @click="change_sorting_basis('sale_num')"
+                                >
+                                    <a href="#">
+                                        销量
+                                        <i class="goods-sort sort-arrow" v-if="goods_sort[2] === 'asc'">&#xe840;</i>
+                                        <i class="goods-sort sort-arrow" v-if="goods_sort[2] === 'desc'">&#xe83e;</i>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="#">销量</a>
+                                    <a href="#"> 新品 </a>
                                 </li>
                                 <li>
-                                    <a href="#">新品</a>
+                                    <a href="#"> 评价 </a>
                                 </li>
                                 <li>
-                                    <a href="#">评价</a>
+                                    <a href="#"> 价格 </a>
                                 </li>
                                 <li>
-                                    <a href="#">价格⬆</a>
-                                </li>
-                                <li>
-                                    <a href="#">价格⬇</a>
+                                    <a href="#"> 价格 </a>
                                 </li>
                             </ul>
                         </div>
@@ -76,12 +90,15 @@
                                             target="_blank"
                                             href="item.html"
                                             title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                                            >
+                                        >
                                             {{ good.title }}
                                         </a>
                                     </div>
                                     <div class="commit">
-                                        <i class="command">已有<span> {{ parseInt(Math.random() * 10000) }}</span>人评价</i>
+                                        <i class="command"
+                                            >已有<span> {{ parseInt(Math.random() * 10000) }}</span
+                                            >人评价</i
+                                        >
                                     </div>
                                     <div class="operate">
                                         <a
@@ -134,7 +151,6 @@
 <script>
     import { mapGetters, } from "vuex"
     import SearchSelector from './SearchSelector/SearchSelector'
-    import Lodash from "lodash"
 
     export default {
         name: 'Search',
@@ -144,12 +160,17 @@
         },
         data() {
             return {
-
+                // 商品根据综合还是价格排序, 排序分为升序和降序
+                goods_sort: {
+                    1: "asc", // 默认: 综合-升序(asc)
+                    2: "", // 销量
+                },
             }
         },
         mounted() {
-            this.getGoodsInfo()
             this.$route.query.attrs_list = []
+            this.$route.query.order = `1:asc`   // 默认: 综合-升序(asc)
+            this.getGoodsInfo()
         },
         computed: {
             ...mapGetters([
@@ -165,6 +186,7 @@
                     categoryName,
                     goods_name,
                     attrs_list,
+                    order,
                 } = this.$route.query
 
                 let require_field = {
@@ -173,7 +195,7 @@
                     categoryId3,
                     categoryName,
                     keyword: goods_name,
-                    order: "",
+                    order,
                     pageNo: 1,
                     pageSize: 10,
                     props: attrs_list,
@@ -210,6 +232,21 @@
                 }
                 this.$nextTick(this.getGoodsInfo)
             },
+            change_sorting_basis(basis) {
+                if (basis === "complex") {
+                    this.goods_sort[2] = "" // 重置对立的排序条件
+                    this.goods_sort[1] =
+                        this.goods_sort[1] === "asc" ?
+                        "desc" :
+                        "asc"
+                }else if (basis === "sale_num") {
+                    this.goods_sort[1] = "" // 重置对立的排序条件
+                    this.goods_sort[2] =
+                        this.goods_sort[2] === "asc" ?
+                        "desc" :
+                        "asc"
+                }
+            },
         },
         watch: {
             $route: {
@@ -218,7 +255,20 @@
                 handler() {
                     this.getGoodsInfo()
                 },
-            }
+            },
+            goods_sort: {
+                deep: true,
+                handler(goods_sort) {
+                    Object.keys(goods_sort).forEach(
+                        key => {
+                            if (goods_sort[key]) {
+                                this.$route.query.order = `${key}:${goods_sort[key]}`
+                            }
+                        }
+                    )
+                    this.getGoodsInfo()
+                },
+            },
         },
     }
 </script>
@@ -554,5 +604,20 @@
           }
         }
       }
+    }
+
+    @font-face {
+        font-family: 'sort-arrow';
+        src: url('font/iconfont.woff2?t=1638679346690') format('woff2'),
+            url('font/iconfont.woff?t=1638679346690') format('woff'),
+            url('font/iconfont.ttf?t=1638679346690') format('truetype');
+    }
+
+    .sort-arrow {
+        font-family: "sort-arrow" !important;
+        font-size: 12px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 </style>
