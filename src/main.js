@@ -14,6 +14,10 @@ Vue.component(TripleNav.name, TripleNav)
 import Carousel from "@/components/Carousel"
 Vue.component(Carousel.name, Carousel)
 
+// 注册全局组件 -> 分页器(Pagenation)
+import Pagenation from "@/components/Pagenation"
+Vue.component(Pagenation.name, Pagenation)
+
 // 引入Mock让其自动执行一次, 模拟后台返回数据
 import "@/mock/mockServe"
 

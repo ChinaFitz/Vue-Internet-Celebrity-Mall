@@ -114,35 +114,13 @@
                         </ul>
                     </div>
                     <div class="fr page">
-                        <div class="sui-pagination clearfix">
-                            <ul>
-                                <li class="prev disabled">
-                                    <a href="#">«上一页</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li class="dotted">
-                                    <span>...</span>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li class="next">
-                                    <a href="#">下一页»</a>
-                                </li>
-                            </ul>
-                            <div><span>共10页&nbsp;</span></div>
-                        </div>
+                        <Pagenation 
+                            :currentPage="$route.query.pageNo"
+                            :pageSize="10"
+                            :continuous="5"
+                            :totalData="275"
+                            @get_page="get_page"
+                        />
                     </div>
                 </div>
             </div>
@@ -172,6 +150,7 @@
         mounted() {
             this.$route.query.attrs_list = []
             this.$route.query.order = `1:asc`   // 默认: 综合-升序(asc)
+            this.$route.query.pageNo = 1
             this.getGoodsInfo()
         },
         computed: {
@@ -189,6 +168,7 @@
                     goods_name,
                     attrs_list,
                     order,
+                    pageNo,
                 } = this.$route.query
 
                 let require_field = {
@@ -198,7 +178,7 @@
                     categoryName,
                     keyword: goods_name,
                     order,
-                    pageNo: 1,
+                    pageNo,
                     pageSize: 10,
                     props: attrs_list,
                     trademark: "",
@@ -248,6 +228,11 @@
                         "desc" :
                         "asc"
                 }
+            },
+            // 得到子组件分页组件的点击页数
+            get_page(page_num) {
+                this.$route.query.pageNo = page_num
+                this.$nextTick(this.getGoodsInfo)
             },
         },
         watch: {
@@ -519,95 +504,10 @@
           }
 
           .page {
-            width: 733px;
+            width: 100%;
             height: 66px;
             overflow: hidden;
-            // float: right;
-            // margin: 0 auto;
-            transform: translateX(50%);
-
-            .sui-pagination {
-              margin: 18px 0;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-
-              ul {
-                margin-left: 0;
-                margin-bottom: 0;
-                vertical-align: middle;
-                width: 490px;
-                float: left;
-
-                li {
-                  line-height: 18px;
-                  display: inline-block;
-
-                  a {
-                    position: relative;
-                    float: left;
-                    line-height: 18px;
-                    text-decoration: none;
-                    background-color: #fff;
-                    border: 1px solid #e0e9ee;
-                    margin-left: -1px;
-                    font-size: 14px;
-                    padding: 9px 18px;
-                    color: #333;
-                  }
-
-                  &.active {
-                    a {
-                      background-color: #fff;
-                      color: #e1251b;
-                      border-color: #fff;
-                      cursor: default;
-                    }
-                  }
-
-                  &.prev {
-                    a {
-                      background-color: #fafafa;
-                    }
-                  }
-
-                  &.disabled {
-                    a {
-                      color: #999;
-                      cursor: default;
-                    }
-                  }
-
-                  &.dotted {
-                    span {
-                      margin-left: -1px;
-                      position: relative;
-                      float: left;
-                      line-height: 18px;
-                      text-decoration: none;
-                      background-color: #fff;
-                      font-size: 14px;
-                      border: 0;
-                      padding: 9px 18px;
-                      color: #333;
-                    }
-                  }
-
-                  &.next {
-                    a {
-                      background-color: #fafafa;
-                    }
-                  }
-                }
-              }
-
-              div {
-                color: #333;
-                font-size: 14px;
-                float: right;
-                width: 241px;
-              }
-            }
+            transform: translateX(16%);
           }
         }
       }

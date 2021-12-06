@@ -75,6 +75,8 @@
                     query,
                     params,
                 })
+
+                this.goods_name = ""    // 搜索后重置清空掉输入框
             }
         }
     }
