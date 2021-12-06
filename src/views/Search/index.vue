@@ -128,13 +128,15 @@
                                 <li>
                                     <a href="#">3</a>
                                 </li>
+                                <li class="dotted">
+                                    <span>...</span>
+                                </li>
                                 <li>
                                     <a href="#">4</a>
                                 </li>
                                 <li>
                                     <a href="#">5</a>
                                 </li>
-                                <li class="dotted"><span>...</span></li>
                                 <li class="next">
                                     <a href="#">下一页»</a>
                                 </li>
@@ -520,10 +522,15 @@
             width: 733px;
             height: 66px;
             overflow: hidden;
-            float: right;
+            // float: right;
+            // margin: 0 auto;
+            transform: translateX(50%);
 
             .sui-pagination {
               margin: 18px 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
 
               ul {
                 margin-left: 0;
