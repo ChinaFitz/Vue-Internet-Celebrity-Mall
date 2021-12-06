@@ -76,17 +76,22 @@ const routes = [
         }
     },
     {
-        path: "/detail",
+        path: "/detail/:skuid",
         component: Detail,
         name: "Detail",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
         }
     },
+    
 ];
 
 const router = new VueRouter({
     routes,
+    // 滚动行为: 当切换路由后自动将滚动条拉到最上面
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: savedPosition }
+    },
 });
 
 export default router;

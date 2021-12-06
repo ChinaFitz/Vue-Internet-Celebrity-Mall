@@ -77,7 +77,10 @@
                             <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                                 <div class="list-wrap">
                                     <div class="p-img">
-                                        <a href="item.html" target="_blank"><img :src="good.defaultImg" /></a>
+                                        <!-- 跳转到detail路由, 并携带param参数 -->
+                                        <router-link href="item.html" :to="`/detail/${good.id}`">
+                                            <img :src="good.defaultImg" />
+                                        </router-link>
                                     </div>
                                     <div class="price">
                                         <strong>
