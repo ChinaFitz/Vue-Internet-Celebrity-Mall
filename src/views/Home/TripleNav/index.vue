@@ -101,7 +101,7 @@
             
         },
         mounted() {
-            if (!(this.$route.path === "/search")){
+            if (this.$route.path === "/home"){
                 this.sort_list_show = true
             }
         },
@@ -141,14 +141,10 @@
                 }
             },
             showSortList() {
-                if (this.$route.path === "/search"){
-                    this.sort_list_show = true
-                }
+                this.sort_list_show = true
             },
             hideSortList() {
-                if (this.$route.path === "/search"){
-                    this.sort_list_show = false
-                }
+                this.sort_list_show = false
             },
             // transition钩子, 用于解决home组件不需要过渡,但是在切换时仍然生效的问题
             enter(el, done) {

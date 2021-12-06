@@ -6,6 +6,7 @@ import Login from "@/views/Login"
 import Register from "@/views/Register"
 import Home from "@/views/Home"
 import Search from "@/views/Search"
+import Detail from "@/views/Detail"
 
 
 
@@ -70,6 +71,14 @@ const routes = [
         path: "/search",
         component: Search,
         name: "Search",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        }
+    },
+    {
+        path: "/detail",
+        component: Detail,
+        name: "Detail",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
         }
