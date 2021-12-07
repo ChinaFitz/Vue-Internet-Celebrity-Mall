@@ -141,10 +141,10 @@
                 }
             },
             showSortList() {
-                this.sort_list_show = true
+                if (this.$route.path !== "/home") this.sort_list_show = true
             },
             hideSortList() {
-                this.sort_list_show = false
+                if (this.$route.path !== "/home") this.sort_list_show = false
             },
             // transition钩子, 用于解决home组件不需要过渡,但是在切换时仍然生效的问题
             enter(el, done) {
