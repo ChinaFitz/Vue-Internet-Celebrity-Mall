@@ -7,6 +7,7 @@ import Register from "@/views/Register"
 import Home from "@/views/Home"
 import Search from "@/views/Search"
 import Detail from "@/views/Detail"
+import AddCartSuccess from "@/views/AddCartSuccess"
 
 
 
@@ -79,6 +80,14 @@ const routes = [
         path: "/detail/:skuid",
         component: Detail,
         name: "Detail",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        }
+    },
+    {
+        path: "/addcartsuccess/:skuNum?",
+        component: AddCartSuccess,
+        name: "AddCartSuccess",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
         }

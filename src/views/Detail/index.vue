@@ -89,7 +89,7 @@
                                 <a href="javascript:" class="mins" @click.prevent="want_num--">-</a>
                             </div>
                             <div class="add">
-                                <a href="javascript:">加入购物车</a>
+                                <a href="javascript:;" @click.prevent="addToCar">加入购物车</a>
                             </div>
                         </div>
                     </div>
@@ -363,7 +363,16 @@
                     the_attr => the_attr.isChecked = '0'
                 )
                 spuSaleAttrValueList[index].isChecked = '1'
-            }
+            },
+            async addToCar() {
+                try {
+                    await this.$store.dispatch("addGoodToCar", {want_num: this.want_num, skuId: this.$route.params.skuid})
+                    this.$router.push({name: "AddCartSuccess", query: {skuNum: this.want_num}})
+                    sessionStorage.setItem("skuinfo", JSON.stringify(this.skuInfo))
+                } catch (error) {
+                    alert(error)
+                }
+            },
         },
         watch: {
             // 想要购买(要加入购物车)的数量不能少于1

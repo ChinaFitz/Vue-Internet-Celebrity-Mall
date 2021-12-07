@@ -20,3 +20,7 @@ export const searchGoodsInfo = (params) => request.post(`/list`, params);
 
 // 获取商品详情接口
 export const getGoodDetail = (skuid) => request.get(`/item/${skuid}`);
+
+
+// 添加到购物车(对已有物品进行数量改动)接口
+export const addGoodToCar = (skuid, skuNum) => request.post(`/cart/addToCart/${skuid}/${skuNum}`);

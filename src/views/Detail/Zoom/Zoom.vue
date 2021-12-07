@@ -29,15 +29,18 @@
         zoom($e) {
             let left = $e.offsetX - (this.$refs.mask.offsetWidth / 2)
             let top = $e.offsetY - (this.$refs.mask.offsetHeight / 2)
+
+            // 控制蒙版的活动范围
             if (left < 0) left = 0
             if (left > 200) left = 200
             if (top < 0) top = 0
             if (top > 200) top = 200
+            // 控制蒙版的活动范围
+            
             this.$refs.mask.style.left = `${left}px`
             this.$refs.mask.style.top = `${top}px`
             this.$refs.big.style.left = `${-left}px`
             this.$refs.big.style.top = `${-top}px`
-            console.log(left, top)
         }
     },
   }

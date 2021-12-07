@@ -1,5 +1,6 @@
 import { 
-    getGoodDetail
+    getGoodDetail,
+    addGoodToCar,
 } from "@/api"
 
 export default {
@@ -15,11 +16,20 @@ export default {
                 alert("商品详情接口获取信息失败...")
             }
         },
+        async addGoodToCar({ commit }, {want_num: skuNum, skuId: skuid}) {
+            let r = await addGoodToCar(skuid, skuNum)
+            if (r.code === 200) {
+                console.log(r)
+                return "ok"
+            }else {
+                throw "商品加入购物车失败..."
+            }
+        },
     },
     mutations: {
         GETGOODDETAIL(state, {good_detail}) {
             state.good_detail = good_detail
-        }
+        },
     },
     getters: {
         categoryView(state) {
