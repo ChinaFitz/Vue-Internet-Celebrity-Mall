@@ -90,7 +90,7 @@ const router = new VueRouter({
     routes,
     // 滚动行为: 当切换路由后自动将滚动条拉到最上面
     scrollBehavior (to, from, savedPosition) {
-        return { x: 0, y: savedPosition }
+        return { x: 0, y: 0 }
     },
 });
 

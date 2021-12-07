@@ -16,3 +16,7 @@ export const Floor = () => Carousel_And_Floor_Mock_Request.get(`/floor`);
 
 // 搜索商品接口
 export const searchGoodsInfo = (params) => request.post(`/list`, params);
+
+
+// 获取商品详情接口
+export const getGoodDetail = (skuid) => request.get(`/item/${skuid}`);

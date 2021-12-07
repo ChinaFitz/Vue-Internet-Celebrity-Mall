@@ -1,17 +1,45 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
-    <div class="event"></div>
+    <img :src="img || sku_img" />
+    <div class="event" @mousemove="zoom"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img :src="img || sku_img"  ref="big"/>
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
   export default {
     name: "Zoom",
+    props: [
+        "sku_img",
+    ],
+    data() {
+        return {
+            img: "",
+        }
+    },
+    mounted() {
+        this.$bus.$on("get_small_img", (imgUrl) => {
+            this.img = imgUrl
+        })
+    },
+    methods: {
+        zoom($e) {
+            let left = $e.offsetX - (this.$refs.mask.offsetWidth / 2)
+            let top = $e.offsetY - (this.$refs.mask.offsetHeight / 2)
+            if (left < 0) left = 0
+            if (left > 200) left = 200
+            if (top < 0) top = 0
+            if (top > 200) top = 200
+            this.$refs.mask.style.left = `${left}px`
+            this.$refs.mask.style.top = `${top}px`
+            this.$refs.big.style.left = `${-left}px`
+            this.$refs.big.style.top = `${-top}px`
+            console.log(left, top)
+        }
+    },
   }
 </script>
 
@@ -60,8 +88,8 @@
 
       img {
         width: 200%;
-        max-width: 200%;
         height: 200%;
+        max-width: 200%;
         position: absolute;
         left: 0;
         top: 0;
