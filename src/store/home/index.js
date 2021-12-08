@@ -26,13 +26,13 @@ export default {
     },
     mutations: {
         GETCATEGORYLIST(state, {categoryList}) {
-            state.reqgetCategoryList = categoryList
+            state.reqgetCategoryList = categoryList || []
         },
         Carousel(state, {carousel_list}) {
-            state.carousel_list = carousel_list
+            state.carousel_list = carousel_list || []
         },
         GETFLOORLIST(state, {floor_list}) {
-            state.floor_list = floor_list
+            state.floor_list = floor_list || []
         },
     },
     getters: {},

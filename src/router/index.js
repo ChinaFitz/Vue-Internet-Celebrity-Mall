@@ -86,7 +86,7 @@ const routes = [
         }
     },
     {
-        path: "/addcartsuccess/:skuNum?",
+        path: "/addcartsuccess/:skuid?/:skuNum?",
         component: AddCartSuccess,
         name: "AddCartSuccess",
         meta: {

@@ -24,3 +24,15 @@ export const getGoodDetail = (skuid) => request.get(`/item/${skuid}`);
 
 // 添加到购物车(对已有物品进行数量改动)接口
 export const addGoodToCar = (skuid, skuNum) => request.post(`/cart/addToCart/${skuid}/${skuNum}`);
+
+
+// 获取购物车已加入商品接口
+export const getCart = () => request.get(`/cart/cartList`);
+
+
+// 删除购物车商品接口
+export const deleteGood = (skuid) => request.delete(`/cart/deleteCart/${skuid}`);
+
+
+// 改变商品的选中状态接口
+export const changeSelect = (skuid, isChecked) => request.get(`/cart/checkCart/${skuid}/${isChecked}`);

@@ -19,13 +19,13 @@ export default {
     },
     getters: {
         goodsList(state) {
-            return state.goodsInfo.goodsList || []
+            return state.goodsInfo?.goodsList || []
         },
         attrsList(state) {
-            return state.goodsInfo.attrsList || []
+            return state.goodsInfo?.attrsList || []
         },
         trademarkList(state) {
-            return state.goodsInfo.trademarkList || []
+            return state.goodsInfo?.trademarkList || []
         },
     },
 };

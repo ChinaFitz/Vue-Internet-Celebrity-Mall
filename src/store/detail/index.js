@@ -3,6 +3,8 @@ import {
     addGoodToCar,
 } from "@/api"
 
+import { gen_uuid } from "@/utils/gen_uuid"
+
 export default {
     state: {
         good_detail: {}
@@ -17,9 +19,10 @@ export default {
             }
         },
         async addGoodToCar({ commit }, {want_num: skuNum, skuId: skuid}) {
+            // 该游客意图购买商品, 生成uuid
+            gen_uuid()
             let r = await addGoodToCar(skuid, skuNum)
             if (r.code === 200) {
-                console.log(r)
                 return "ok"
             }else {
                 throw "商品加入购物车失败..."

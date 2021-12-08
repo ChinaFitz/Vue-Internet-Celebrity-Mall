@@ -15,6 +15,10 @@ let requests = axios.create({
 requests.interceptors.request.use(config => {
     // 网络请求进度条开始
     nprogress.start();
+
+    let uuid = localStorage.getItem("UUID")
+    if(uuid) config.headers.userTempId = uuid
+
     return config;
 });
 
