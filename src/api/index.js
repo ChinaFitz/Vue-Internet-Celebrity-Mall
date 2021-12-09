@@ -36,3 +36,11 @@ export const deleteGood = (skuid) => request.delete(`/cart/deleteCart/${skuid}`)
 
 // 改变商品的选中状态接口
 export const changeSelect = (skuid, isChecked) => request.get(`/cart/checkCart/${skuid}/${isChecked}`);
+
+
+// 获取手机验证码接口
+export const getCaptcha = (phone) => request.get(`/user/passport/sendCode/${phone}`);
+
+
+// 用户注册接口
+export const register = (params) => request.post(`/user/passport/register`, params);
