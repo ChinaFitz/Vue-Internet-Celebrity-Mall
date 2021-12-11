@@ -44,3 +44,15 @@ export const getCaptcha = (phone) => request.get(`/user/passport/sendCode/${phon
 
 // 用户注册接口
 export const register = (params) => request.post(`/user/passport/register`, params);
+
+
+// 用户登录接口
+export const login = (params) => request.post(`/user/passport/login`, params);
+
+
+// 登录后获取用户信息接口
+export const getUserInfo = () => request.get(`/user/passport/auth/getUserInfo`);
+
+
+// 退出登录接口
+export const logout = () => request.get(`/user/passport/logout`);

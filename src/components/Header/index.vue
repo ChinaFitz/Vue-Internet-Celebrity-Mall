@@ -7,15 +7,26 @@
                 <div class="container">
                     <div class="loginList">
                         <p>网红好物商城欢迎您！</p>
-                        <p>
-                            <span>请</span>
-                            <router-link to="/login" href="###">登录</router-link>
-                            <router-link to="/register" href="###" class="register">免费注册</router-link>
-                        </p>
+                        
+                        <template v-if="userName">
+                            <p>
+                                <span>{{ userName }}</span>
+                                <a class="register" @click.prevent="logout">退出登录</a>
+                            </p>
+                        </template>
+
+                        <template v-else>
+                            <p>
+                                <span>请</span>
+                                <router-link to="/login" href="###">登录</router-link>
+                                <router-link to="/register" href="###" class="register">免费注册</router-link>
+                            </p>
+                        </template>
+
                     </div>
                     <div class="typeList">
                         <a href="###">我的订单</a>
-                        <a href="###">我的购物车</a>
+                        <router-link to="/shopcart">我的购物车</router-link>
                         <a href="###">我的网红好物</a>
                         <a href="###">网红好物会员</a>
                         <a href="###">企业采购</a>
@@ -77,7 +88,18 @@
                 })
 
                 this.goods_name = ""    // 搜索后重置清空掉输入框
-            }
+            },
+
+            logout() {
+                if (localStorage.getItem("TOKEN")) {
+                    this.$store.dispatch("logout")
+                }
+            },
+        },
+        computed: {
+            userName() {
+                return this.$store.state.login_register.userInfo.name
+            },
         }
     }
 </script>

@@ -31,8 +31,16 @@
             ThemeFloor,
             Brands,
         },
-        mounted() {
+        async mounted() {
             this.$store.dispatch("getFloorList")
+            const token = localStorage.getItem("TOKEN")
+            if(token) {
+                try {
+                    let r = await this.$store.dispatch("getUserInfo")
+                } catch (error) {
+                    console.log(error)
+                }
+            }
         },
         computed: {
             ...mapState({

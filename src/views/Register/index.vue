@@ -87,8 +87,9 @@
                             password: your_pwd,
                             code: your_captcha,
                         }
-                        let r = await this.$store.dispatch("register", register_params)
-                        console.log(r)
+                        let r = await this.$store.dispatch("register", register_params).catch(e=>alert(e))
+                        alert("用户注册成功...")
+                        this.$router.push({name: "Login"})
                     }else {
                         alert("请确认两次密码输入是否一致...")
                     }

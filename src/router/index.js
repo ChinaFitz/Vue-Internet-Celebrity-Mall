@@ -10,6 +10,8 @@ import Detail from "@/views/Detail"
 import AddCartSuccess from "@/views/AddCartSuccess"
 import ShopCart from "@/views/ShopCart"
 
+import Store from "@/store"
+
 
 
 // ================================ 修复 Avoided redundant navigation... 报错 ==================================
@@ -111,5 +113,42 @@ const router = new VueRouter({
         return { x: 0, y: 0 }
     },
 });
+
+
+
+// 添加全局路由前置守卫
+router.beforeEach(
+    async (to, from, next) => {
+        const userName = Store.state.login_register.userInfo.name
+
+        // 登录后不能再去注册和登录组件
+        if (localStorage.getItem("TOKEN")) {
+            if (to.path === "/login" || to.path === "/register") {
+                // 重定向到首页
+                next("/home")
+            }else {
+                // 是否成功获取到用户信息
+                if (userName) {
+                    // 已经成功获取到用户的信息
+                    next()
+                }else {
+                    /* 
+                        重新获取用户信息
+                    */
+                    try {
+                        Store.dispatch("getUserInfo")
+                        next()
+                    } catch (error) {
+                        // 对于登录了但是没有正确获取到用户信息时, 退出登录后再重新获取用户信息
+                        await Store.dispatch("logout")
+                        next("/login")
+                    }
+                }
+            }
+        }else {         // 未登录
+            next()
+        }
+    }
+)
 
 export default router;

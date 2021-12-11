@@ -17,7 +17,9 @@ requests.interceptors.request.use(config => {
     nprogress.start();
 
     let uuid = localStorage.getItem("UUID")
+    let token = localStorage.getItem("TOKEN")
     if(uuid) config.headers.userTempId = uuid
+    if(token) config.headers.token = token
 
     return config;
 });
