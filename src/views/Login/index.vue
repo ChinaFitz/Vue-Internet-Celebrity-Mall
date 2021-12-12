@@ -69,8 +69,8 @@
         name: 'Login',
         data() {
             return {
-                phone: "",
-                pwd: "",
+                phone: "13700000000",
+                pwd: "111111",
             }
         },
         methods: {
