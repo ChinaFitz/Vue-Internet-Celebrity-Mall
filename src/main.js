@@ -4,8 +4,8 @@ import router from './router'
 import store from './store'
 
 // 引入elementUI作为二维码支付的UI
-import { MessageBox } from "element-ui"
-
+import { MessageBox, Pagination, } from "element-ui"
+Vue.use(Pagination)
 
 Vue.config.productionTip = false
 

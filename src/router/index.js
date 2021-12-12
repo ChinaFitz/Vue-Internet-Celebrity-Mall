@@ -142,6 +142,9 @@ const routes = [
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
         },
+        redirect: {
+            path: "/center/porder",
+        },
         children: [
             {
                 path: "porder",

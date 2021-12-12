@@ -1,6 +1,6 @@
 <template>
     <div>
-        团队订单展示
+        <h1 style="color: red;">团队订单展示</h1>
     </div>
 </template>
 

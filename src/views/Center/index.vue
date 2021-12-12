@@ -6,8 +6,8 @@
                 <div class="order-left">
                     <dl>
                         <dt><i>·</i> 订单中心</dt>
-                        <dd>我的订单</dd>
-                        <dd>团购订单</dd>
+                        <dd @click.prevent.stop="gotoPOrder">我的订单</dd>
+                        <dd @click.prevent.stop="gotoGOrder">团购订单</dd>
                         <dd>本地生活订单</dd>
                         <dd>我的预售</dd>
                         <dd>评价晒单</dd>
@@ -70,39 +70,7 @@
                             </table>
                         </div>
 
-
-                        <Porder />
-
-                        <!-- 分页器 -->
-                        <div class="choose-order">
-                            <div class="pagination">
-                                <ul>
-                                    <li class="prev disabled">
-                                        <a href="javascript:">«上一页</a>
-                                    </li>
-                                    <li class="page actived">
-                                        <a href="javascript:">1</a>
-                                    </li>
-                                    <li class="page">
-                                        <a href="javascript:">2</a>
-                                    </li>
-                                    <li class="page">
-                                        <a href="javascript:">3</a>
-                                    </li>
-                                    <li class="page">
-                                        <a href="javascript:">4</a>
-                                    </li>
-
-                                    <li class="next disabled">
-                                        <a href="javascript:">下一页»</a>
-                                    </li>
-                                </ul>
-                                <div>
-                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;共2页&nbsp;</span>
-                                </div>
-                            </div>
-                        </div>
-
+                        <router-view></router-view>
 
                     </div>
                     <!--猜你喜欢-->
@@ -164,20 +132,21 @@
 </template>
 
 <script>
-    import personal_order from "@/views/Center/personal_order"
-    import group_order from "@/views/Center/group_order"
-
     export default {
         name: 'Center',
         data() {
             return {
-
+                
             }
         },
-        components: {
-            Porder: personal_order,
-            Gorder: group_order,
-        }
+        methods: {
+            gotoPOrder() {
+                this.$router.push("/center/porder")
+            },
+            gotoGOrder() {
+                this.$router.push("/center/gorder")
+            },
+        },
     }
 </script>
 
@@ -355,6 +324,11 @@
 
               // 分页
               .choose-order {
+                position: relative;
+                margin-left: 50%;
+                transform: translateX(-50%);
+
+
                 .pagination {
                   margin: 38px 0;
 

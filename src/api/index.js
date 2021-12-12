@@ -76,3 +76,7 @@ export const getPaymentInfo = (orderId) => request.get(`/payment/weixin/createNa
 
 // 获取支付状态接口
 export const get_pay_status = (orderId) => request.get(`/payment/weixin/queryPayStatus/${orderId}`);
+
+
+// 获取个人订单接口
+export const get_orders = (page, limit) => request.get(`/order/auth/${page}/${limit}`);
