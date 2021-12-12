@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 引入elementUI作为二维码支付的UI
+import { MessageBox } from "element-ui"
+
+
 Vue.config.productionTip = false
 
 
@@ -30,5 +34,7 @@ new Vue({
   render: h => h(App),
   beforeCreate() {
     Vue.prototype.$bus = this
+    Vue.prototype.$msgbox = MessageBox
+    Vue.prototype.$alert = MessageBox.alert
   },
 }).$mount('#app')

@@ -9,6 +9,14 @@ import Search from "@/views/Search"
 import Detail from "@/views/Detail"
 import AddCartSuccess from "@/views/AddCartSuccess"
 import ShopCart from "@/views/ShopCart"
+import Trade from "@/views/Trade"
+import Pay from "@/views/Pay"
+import PaySuccess from "@/views/PaySuccess"
+
+/* 个人中心及其两个订单相关的二级路由 */
+import Center from "@/views/Center"
+import Porder from "@/views/Center/personal_order"
+import Gorder from "@/views/Center/group_order"
 
 import Store from "@/store"
 
@@ -103,6 +111,56 @@ const routes = [
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
         }
     },
+    {
+        path: "/trade",
+        component: Trade,
+        name: "Trade",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        }
+    },
+    {
+        path: "/pay",
+        component: Pay,
+        name: "Pay",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        }
+    },
+    {
+        path: "/paysuccess",
+        component: PaySuccess,
+        name: "PaySuccess",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        }
+    },
+    {
+        path: "/center",
+        component: Center,
+        name: "Center",
+        meta: {
+            not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        },
+        children: [
+            {
+                path: "porder",
+                component: Porder,
+                name: "Porder",
+                meta: {
+                    not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+                },  
+            },
+            {
+                path: "gorder",
+                component: Gorder,
+                name: "Gorder",
+                meta: {
+                    not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+                },  
+            },
+        ]
+    },
     
 ];
 
@@ -136,7 +194,7 @@ router.beforeEach(
                         重新获取用户信息
                     */
                     try {
-                        Store.dispatch("getUserInfo")
+                        await Store.dispatch("getUserInfo")
                         next()
                     } catch (error) {
                         // 对于登录了但是没有正确获取到用户信息时, 退出登录后再重新获取用户信息

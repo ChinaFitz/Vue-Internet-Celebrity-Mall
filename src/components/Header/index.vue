@@ -92,7 +92,7 @@
 
             logout() {
                 if (localStorage.getItem("TOKEN")) {
-                    this.$store.dispatch("logout")
+                    this.$store.dispatch("logout").catch(e => alert(e))
                 }
             },
         },

@@ -7,6 +7,8 @@ import search from './search';
 import detail from './detail';
 import shopCart from './shopCart';
 import login_register from './login_register';
+import trade from './trade';
+import payment from './payment';
 
 Vue.use(Vuex);
 
@@ -18,5 +20,7 @@ export default new Vuex.Store({
         detail,
         shopCart,
         login_register,
+        trade,
+        payment,
     },
 });

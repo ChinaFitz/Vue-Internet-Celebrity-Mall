@@ -56,3 +56,23 @@ export const getUserInfo = () => request.get(`/user/passport/auth/getUserInfo`);
 
 // 退出登录接口
 export const logout = () => request.get(`/user/passport/logout`);
+
+
+// 获取用户的常用地址接口
+export const getUserAddress = () => request.get(`/user/userAddress/auth/findUserAddressList`);
+
+
+// 获取用户登录后加入购物车的商品信息接口
+export const getOrderInfo = () => request.get(`/order/auth/trade`);
+
+
+// 用户订单提交接口
+export const commit_order = (tradeNo, tradeInfo) => request.post(`/order/auth/submitOrder`, tradeInfo, {params: {tradeNo}});
+
+
+// 用户支付接口
+export const getPaymentInfo = (orderId) => request.get(`/payment/weixin/createNative/${orderId}`);
+
+
+// 获取支付状态接口
+export const get_pay_status = (orderId) => request.get(`/payment/weixin/queryPayStatus/${orderId}`);
