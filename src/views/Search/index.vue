@@ -79,7 +79,7 @@
                                     <div class="p-img">
                                         <!-- 跳转到detail路由, 并携带param参数 -->
                                         <router-link href="item.html" :to="`/detail/${good.id}`">
-                                            <img :src="good.defaultImg" />
+                                            <img v-lazy="good.defaultImg" />
                                         </router-link>
                                     </div>
                                     <div class="price">

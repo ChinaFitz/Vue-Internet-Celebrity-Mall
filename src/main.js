@@ -7,6 +7,15 @@ import store from './store'
 import { MessageBox, Pagination, } from "element-ui"
 Vue.use(Pagination)
 
+// 引入Vue图片懒加载插件
+import VueLazyload from "vue-lazyload"
+import load_png from "../public/lazy-load.png"
+Vue.use(VueLazyload, {
+    error: load_png,
+    loading: load_png,
+    attempt: 1
+})
+
 Vue.config.productionTip = false
 
 
