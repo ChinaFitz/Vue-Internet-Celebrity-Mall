@@ -117,6 +117,15 @@ const routes = [
         name: "Trade",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        },
+        // 创建路由独享守卫: 交易、结算路由只能从购物车(shopcart)路由访问
+        beforeEnter: (to, from, next) => {
+            if (from.path === "/shopcart") {
+                next()
+            }else {
+                // 否则从哪个路由来就回到那个路由去, 返回到from对应的path
+                next(false)
+            }
         }
     },
     {
@@ -125,7 +134,19 @@ const routes = [
         name: "Pay",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
-        }
+        },
+        // 创建路由独享守卫: 支付路由只能从交易、结算(trade)路由访问
+
+        // 这里使用 路由组件内守卫 进行演示
+
+        // beforeEnter: (to, from, next) => {
+        //     if (from.path === "/trade") {
+        //         next()
+        //     }else {
+        //         // 否则从哪个路由来就回到那个路由去, 返回到from对应的path
+        //         next(false)
+        //     }
+        // }
     },
     {
         path: "/paysuccess",
@@ -133,6 +154,15 @@ const routes = [
         name: "PaySuccess",
         meta: {
             not_login_or_register: true, // 控制Footer组件在登录、注册时的隐藏
+        },
+        // 创建路由独享守卫: 支付状态成功路由只能从支付路由(pay)访问
+        beforeEnter: (to, from, next) => {
+            if (from.path === "/pay") {
+                next()
+            }else {
+                // 否则从哪个路由来就回到那个路由去, 返回到from对应的path
+                next(false)
+            }
         }
     },
     {
@@ -206,8 +236,19 @@ router.beforeEach(
                     }
                 }
             }
-        }else {         // 未登录
-            next()
+        }else {
+            /* 
+                未登录状态不能去一下组件:
+                    1. /trade
+                    2. /pay
+                    3. /paysusscess
+                    4. center
+            */
+            if (/\/trade|pay|center/ig.test(to.path)) {
+                next(`/login?redirect=${to.path}`)
+            }else {
+                next()
+            }
         }
     }
 )

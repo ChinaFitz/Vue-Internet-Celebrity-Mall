@@ -86,6 +86,17 @@
     import QRCode from 'qrcode'
 
     export default {
+
+        // 路由组件守卫
+        beforeRouteEnter: (to, from, next) => {
+            if (from.path === "/trade") {
+                next()
+            }else {
+                // 否则从哪个路由来就回到那个路由去, 返回到from对应的path
+                next(false)
+            }
+        },
+
         name: 'Pay',
         data() {
             return {
