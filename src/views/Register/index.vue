@@ -8,29 +8,59 @@
             </h3>
             <div class="content">
                 <label>手机号:</label>
-                <input type="text" placeholder="请输入你的手机号" v-model="your_phone"/>
-                <span class="error-msg">错误提示信息</span>
+                <input
+                    placeholder="请输入你的手机号"
+                    v-model="your_phone"
+                    name="phone"
+                    v-validate="{ required: true, regex: /^1\d{10}$/ }"
+                    :class="{ invalid: errors.has('phone') }"
+                />
+                <span class="error-msg">{{ errors.first("phone") }}</span>
             </div>
             <div class="content">
                 <label>验证码:</label>
-                <input type="text" placeholder="请输入验证码" v-model="your_captcha"/>
+                <input
+                    placeholder="请输入你的验证码"
+                    v-model="your_captcha"
+                    name="code"
+                    v-validate="{ required: true, regex: /^\d{6}$/ }"
+                    :class="{ invalid: errors.has('code') }"
+                />
                 <button id="getCaptcha" @click="getCaptcha">获取验证码</button>
-                <span class="error-msg">错误提示信息</span>
+                <span class="error-msg">{{ errors.first("code") }}</span>
             </div>
             <div class="content">
                 <label>登录密码:</label>
-                <input type="text" placeholder="请输入你的登录密码" v-model="your_pwd"/>
-                <span class="error-msg">错误提示信息</span>
+                <input
+                    placeholder="请输入你的密码"
+                    v-model="your_pwd"
+                    name="password"
+                    v-validate="{ required: true, regex: /^[0-9A-Za-z]{8,20}$/ }"
+                    :class="{ invalid: errors.has('password') }"
+                />
+                <span class="error-msg">{{ errors.first("password") }}</span>
             </div>
             <div class="content">
                 <label>确认密码:</label>
-                <input type="text" placeholder="请输入确认密码" v-model="your_pwd_again"/>
-                <span class="error-msg">错误提示信息</span>
+                <input
+                    placeholder="请输入确认密码"
+                    v-model="your_pwd_again"
+                    name="password1"
+                    v-validate="{ required: true, is: password }"
+                    :class="{ invalid: errors.has('password1') }"
+                />
+                <span class="error-msg">{{ errors.first("password1") }}</span>
             </div>
             <div class="controls">
-                <input name="m1" type="checkbox" v-model="read_protocol"/>
+                <input
+                    type="checkbox"
+                    v-model="read_protocol"
+                    name="agree"
+                    v-validate="{ required: true, agree: true }"
+                    :class="{ invalid: errors.has('agree') }"
+                />
                 <span>同意协议并注册《好物商城用户协议》</span>
-                <span class="error-msg">错误提示信息</span>
+                <span class="error-msg">{{ errors.first("agree") }}</span>
             </div>
             <div class="btn">
                 <button @click="register">完成注册</button>
@@ -79,22 +109,25 @@
                 }
             },
             async register() {
-                let {your_phone, your_captcha, your_pwd, your_pwd_again, read_protocol} = this
-                if (your_phone && your_captcha && your_pwd && your_pwd_again && read_protocol) {
-                    if (your_pwd === your_pwd_again) {
-                        const register_params = {
-                            phone: your_phone,
-                            password: your_pwd,
-                            code: your_captcha,
+                const allValided = await this.$validator.validateAll()
+                if (allValided) {
+                    let {your_phone, your_captcha, your_pwd, your_pwd_again, read_protocol} = this
+                    if (your_phone && your_captcha && your_pwd && your_pwd_again && read_protocol) {
+                        if (your_pwd === your_pwd_again) {
+                            const register_params = {
+                                phone: your_phone,
+                                password: your_pwd,
+                                code: your_captcha,
+                            }
+                            let r = await this.$store.dispatch("register", register_params).catch(e=>alert(e))
+                            alert("用户注册成功...")
+                            this.$router.push({name: "Login"})
+                        }else {
+                            alert("请确认两次密码输入是否一致...")
                         }
-                        let r = await this.$store.dispatch("register", register_params).catch(e=>alert(e))
-                        alert("用户注册成功...")
-                        this.$router.push({name: "Login"})
                     }else {
-                        alert("请确认两次密码输入是否一致...")
+                        alert("请完整填写所有需要的注册信息...")
                     }
-                }else {
-                    alert("请完整填写所有需要的注册信息...")
                 }
             }
         },
