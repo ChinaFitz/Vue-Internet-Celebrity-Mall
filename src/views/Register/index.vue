@@ -80,7 +80,9 @@
                 <li>好物社区</li>
             </ul>
             <div class="address">地址：广东省中山市东区街道</div>
-            <div class="beian">粤ICP备88888888号</div>
+            <div class="beian">
+                <a href="https://beian.miit.gov.cn/" target="_blank">备案号: 粤ICP备2021178257号</a>
+            </div>
         </div>
     </div>
 </template>
@@ -138,6 +140,9 @@
 </script>
 
 <style lang="less" scoped>
+    a {
+        text-decoration: none;
+    }
     .register-container {
       .register {
         width: 1200px;
@@ -240,6 +245,13 @@
         margin: 0 auto;
         text-align: center;
         line-height: 24px;
+
+        a {
+            cursor: default;
+            &:hover {
+                text-decoration: none;
+            }
+        }
 
         ul {
           li {

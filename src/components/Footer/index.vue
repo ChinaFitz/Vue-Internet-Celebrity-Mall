@@ -99,7 +99,9 @@
                     <li>关于我们</li>
                 </ul>
                 <p>地址：广东省中山市东区街道</p>
-                <p>粤ICP备88888888号</p>
+                <p>
+                    <a href="https://beian.miit.gov.cn/" target="_blank">备案号: 粤ICP备2021178257号</a>
+                </p>
             </div>
         </div>
     </div>
@@ -155,6 +157,13 @@
 
             .copyright {
                 padding: 20px;
+
+                a {
+                    cursor: default;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
 
                 .helpLink {
                     text-align: center;
